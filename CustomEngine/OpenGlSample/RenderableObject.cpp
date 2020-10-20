@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "RenderableObject.h"
 
 #include "Renderer.h"
 #include "FileManager.h"
@@ -10,7 +10,7 @@
 RenderableObject::RenderableObject()
 {
 	//생성마다 Renderer에 Object 등록
-	Renderer::Instance()->RegisterObject(this);
+	Renderer::Instance()->RegisterRenderObject(this);
 
 	Texture = NULL;
 
@@ -20,7 +20,7 @@ RenderableObject::RenderableObject()
 RenderableObject::RenderableObject(float x, float y, float z)
 {
 	//생성마다 Renderer에 Object 등록
-	Renderer::Instance()->RegisterObject(this);
+	Renderer::Instance()->RegisterRenderObject(this);
 
 	Texture = NULL;
 
@@ -86,7 +86,7 @@ bool RenderableObject::getSimilarVertexIndex_fast(PackedVertex& packed,
 	unsigned short& result)
 {
 	std::map<PackedVertex, unsigned short>::iterator it = VertexToOutIndex.find(packed);
-	if (it == VertexToOutIndex.end()) 
+	if (it == VertexToOutIndex.end())
 	{
 		return false;
 	}

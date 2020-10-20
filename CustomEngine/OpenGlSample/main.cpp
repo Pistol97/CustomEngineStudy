@@ -2,7 +2,7 @@
 
 #include "FileManager.h"
 #include "Renderer.h"
-#include "Object.h"
+#include "RenderableObject.h"
 #include "Camera.h"
 
 #pragma comment(lib, "OpenGL32.lib")
@@ -33,12 +33,17 @@ int main(void)
 		camera->computeMatricesFromInputs(Renderer::Instance()->GetWindow());
 
 		Renderer::Instance()->Draw();
+		Renderer::Instance()->Update();
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0);
 
 	Renderer::Instance()->Clean();
+
+	delete cube;
+	delete suzanne;
+	delete camera;
 
 	return 0;
 }

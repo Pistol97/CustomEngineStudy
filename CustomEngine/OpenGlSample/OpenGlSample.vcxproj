@@ -21,8 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{1B865A25-8829-41FF-84D1-BB22D99AE88E}</ProjectGuid>
-    <RootNamespace>OpenGlSample</RootNamespace>
+    <RootNamespace>CustomEngineStudy</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <ProjectName>CustomEngineStudy</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -368,12 +369,13 @@
     <ClInclude Include="include\GL\glew.h" />
     <ClInclude Include="include\GL\glxew.h" />
     <ClInclude Include="include\GL\wglew.h" />
-    <ClInclude Include="OBJDataObject.h" />
+    <ClInclude Include="IUpdater.h" />
+    <ClInclude Include="NonRenderableObject.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.shader" />
@@ -517,11 +519,10 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OBJDataObject.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="NonRenderableObject.cpp" />
+    <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGlSample.rc" />

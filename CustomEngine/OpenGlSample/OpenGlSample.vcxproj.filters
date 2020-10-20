@@ -786,10 +786,13 @@
     <ClInclude Include="IClean.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="RenderableObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="OBJDataObject.h">
+    <ClInclude Include="NonRenderableObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IUpdater.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1203,9 +1206,6 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -1218,10 +1218,10 @@
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="NonRenderableObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="OBJDataObject.cpp">
+    <ClCompile Include="RenderableObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

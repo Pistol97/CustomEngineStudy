@@ -8,7 +8,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Shader.h"
-#include "Object.h"
+#include "RenderableObject.h"
+#include "NonRenderableObject.h"
 #include "Camera.h"
 #include "FileManager.h"
 
@@ -99,8 +100,8 @@ void Renderer::Init(int width, int height, const char* title_name)
 void Renderer::LoadVBO()
 {
 	for (
-		std::vector<RenderableObject*>::iterator it = objects.begin();
-		it != objects.end();
+		std::vector<RenderableObject*>::iterator it = render_objects.begin();
+		it != render_objects.end();
 		++it
 		)
 	{
@@ -134,8 +135,8 @@ void Renderer::Draw()
 	lightPos = glm::vec3(4, 4, 4);
 	glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 	for (
-		std::vector<RenderableObject*>::iterator it = objects.begin();
-		it != objects.end();
+		std::vector<RenderableObject*>::iterator it = render_objects.begin();
+		it != render_objects.end();
 		++it
 		)
 	{
@@ -208,18 +209,29 @@ void Renderer::Draw()
 	glfwPollEvents();
 }
 
+void Renderer::Update()
+{
+	for(
+		std::vector<NonRenderableObject*>::iterator it = non_render_objects.begin();
+		it != non_render_objects.end();
+		++it	
+		)
+	{
+		(*it)->Update();
+	}
+}
+
 void Renderer::Clean()
 {
 	for (
-		std::vector<RenderableObject*>::iterator it = objects.begin();
-		it != objects.end();
+		std::vector<RenderableObject*>::iterator it = render_objects.begin();
+		it != render_objects.end();
 		++it
 		)
 	{
 		(*it)->Clean();
-
-		delete (*it);
 	}
+
 	glDeleteVertexArrays(1, &VertexArrayID);
 	glDeleteProgram(programID);
 
