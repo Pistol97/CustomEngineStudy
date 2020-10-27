@@ -4,7 +4,9 @@
 #include "Renderer.h"
 #include "RenderableObject.h"
 #include "Timer.h"
+#include "InputManager.h"
 #include "Camera.h"
+#include "Player.h"
 
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "lib-vc2017/glew32.lib")
@@ -12,8 +14,8 @@
 
 int main(void)
 {
-	RenderableObject* cube = new RenderableObject();
-	RenderableObject* suzanne = new RenderableObject(5.0f, 0.0f, 0.0f);
+	RenderableObject* cube = new RenderableObject(0.0f, 0.0f, 0.0f);
+	RenderableObject* player = new Player(0.0f, -3.0f, 9.0f);
 
 	Camera* camera = new Camera(0.0f, 1.0f, 15.0f);
 
@@ -22,29 +24,33 @@ int main(void)
 
 	//obj 불러오기
 	cube->SetMesh("cube.obj");
-	suzanne->SetMesh("suzanne.obj");
+	player->SetMesh("suzanne.obj");
 
 	//dds 불러오기
 	cube->SetTexture("cube.DDS");
-	suzanne->SetTexture("suzanne.DDS");
+	player->SetTexture("suzanne.DDS");
 
 	Renderer::Instance()->LoadVBO();
 	Timer::Instance()->Init();
 
+	player->Rotate(180.0f);
 
 	do {
-		Renderer::Instance()->Draw();
+
 		Renderer::Instance()->Update();
-		camera->computeMatricesFromInputs(Renderer::Instance()->GetWindow());
+		Renderer::Instance()->Draw();
+		camera->MouseView(Renderer::Instance()->GetWindow());
+
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0);
 
 	Renderer::Instance()->Clean();
 	Timer::Instance()->Clean();
+	InputManager::Instance()->Clean();
 
 	delete cube;
-	delete suzanne;
+	delete player;
 	delete camera;
 
 	return 0;
