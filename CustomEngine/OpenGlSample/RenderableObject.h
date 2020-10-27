@@ -6,17 +6,17 @@
 class RenderableObject : public Object
 {
 public:
-	//기본 위치(0,0,0)생성
-	RenderableObject();
-
 	//해당 좌표 생성
 	RenderableObject(float x, float y, float z);
 
 	void SetMesh(const char* path);
 	void SetTexture(const char* path);
+	void Rotate(float degree);
 
 	virtual void Clean() override;
 
+
+public:
 	inline std::vector<glm::vec3>& GetIndexedVertices() { return indexed_vertices; }
 	inline std::vector<glm::vec2>& GetIndexedUVs() { return indexed_uvs; }
 	inline std::vector<glm::vec3>& GetIndexedNormals() { return indexed_normals; }

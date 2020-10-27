@@ -7,16 +7,6 @@
 
 #include "glm/gtc/matrix_transform.hpp"
 
-RenderableObject::RenderableObject()
-{
-	//생성마다 Renderer에 Object 등록
-	Renderer::Instance()->RegisterRenderObject(this);
-
-	Texture = NULL;
-
-	ModelMatrix = glm::mat4(1.0f);
-}
-
 RenderableObject::RenderableObject(float x, float y, float z)
 {
 	//생성마다 Renderer에 Object 등록
@@ -42,6 +32,15 @@ void RenderableObject::SetMesh(const char* path)
 void RenderableObject::SetTexture(const char* path)
 {
 	Texture = FileManager::Instance()->loadDDS(path);
+}
+
+void RenderableObject::Rotate(float degree)
+{
+	glm::mat4 rotation = glm::mat4(1.0f);
+
+	rotation = glm::rotate(rotation, glm::radians(degree), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	ModelMatrix = ModelMatrix * rotation;
 }
 
 void RenderableObject::Clean()
