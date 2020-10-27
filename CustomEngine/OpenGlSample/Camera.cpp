@@ -18,28 +18,11 @@ Camera::Camera(float x, float y, float z)
 
 void Camera::MouseView(GLFWwindow* window)
 {
-	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	glm::vec3 direction(
-		cos(InputManager::Instance()->GetVerticaltalAngle()) * sin(InputManager::Instance()->GetHorizontalAngle()),
-		sin(InputManager::Instance()->GetVerticaltalAngle()),
-		cos(InputManager::Instance()->GetVerticaltalAngle()) * cos(InputManager::Instance()->GetHorizontalAngle())
-	);
-
-	// Right vector
-	glm::vec3 right = glm::vec3(
-		sin(InputManager::Instance()->GetHorizontalAngle() - 3.14f / 2.0f),
-		0,
-		cos(InputManager::Instance()->GetHorizontalAngle() - 3.14f / 2.0f)
-	);
-
-	// Up vector
-	glm::vec3 up = glm::cross(right, direction);
-	
 	// Camera matrix
 	ViewMatrix = glm::lookAt(
 		position,           // Camera is here
-		position + direction, // and looks here : at the same position, plus "direction"
-		up                  // Head is up (set to 0,-1,0 to look upside-down)
+		position + InputManager::Instance()->GetDirection(), // and looks here : at the same position, plus "direction"
+		InputManager::Instance()->GetUp()                  // Head is up (set to 0,-1,0 to look upside-down)
 	);
 
 	// For the next frame, the "last time" will be "now"

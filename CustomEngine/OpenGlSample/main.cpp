@@ -15,7 +15,7 @@
 int main(void)
 {
 	RenderableObject* cube = new RenderableObject(0.0f, 0.0f, 0.0f);
-	RenderableObject* player = new Player(0.0f, -3.0f, 9.0f);
+	Player* player = new Player(0.0f, -3.0f, 9.0f);
 
 	Camera* camera = new Camera(0.0f, 1.0f, 15.0f);
 
@@ -40,7 +40,7 @@ int main(void)
 		Renderer::Instance()->Update();
 		Renderer::Instance()->Draw();
 		camera->MouseView(Renderer::Instance()->GetWindow());
-
+		InputManager::Instance()->InputControl(player);
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0);

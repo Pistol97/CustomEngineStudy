@@ -5,6 +5,8 @@
 
 #include "NonRenderableObject.h"
 
+class Player;
+
 class InputManager : public NonRenderableObject
 {
 public:
@@ -17,7 +19,7 @@ public:
 		return instance;
 	}
 
-	void InputControl();
+	void InputControl(Player* player);
 
 	virtual void Update() override;
 	virtual void Clean() override;
@@ -27,8 +29,13 @@ public:
 	inline float GetHorizontalAngle() { return horizontal_angle; }
 	inline float GetVerticaltalAngle() { return vertical_angle; }
 
+	inline glm::vec3 GetDirection() { return direction; }
+	inline glm::vec3 GetRight() { return right; }
+	inline glm::vec3 GetUp() { return up; }
+	
+
 private:
-	InputManager() {}
+	InputManager();
 	~InputManager() {}
 	static InputManager* instance;
 
@@ -36,12 +43,9 @@ private:
 	double mouse_ypos;
 
 	float mouse_speed = 0.005f;
-	float move_speed = 3.0f;
 
 	float horizontal_angle = 3.14f;
 	float vertical_angle = 0.0f;
-
-	glm::vec3 position;
 
 	glm::vec3 direction;
 	glm::vec3 right;
