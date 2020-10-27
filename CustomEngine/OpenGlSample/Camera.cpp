@@ -1,6 +1,7 @@
 #include "Camera.h"
 
 #include "include/GLFW/glfw3.h"
+#include "Timer.h"
 
 Camera::Camera(float x, float y, float z)
 {
@@ -16,15 +17,6 @@ Camera::Camera(float x, float y, float z)
 
 void Camera::computeMatricesFromInputs(GLFWwindow* window)
 {
-
-
-	// glfwGetTime is called only once, the first time this function is called
-	static double lastTime = glfwGetTime();
-
-	// Compute time difference between current and last frame
-	double currentTime = glfwGetTime();
-	float deltaTime = float(currentTime - lastTime);
-
 	// Get mouse position
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
@@ -57,19 +49,19 @@ void Camera::computeMatricesFromInputs(GLFWwindow* window)
 	//GLFW_KEY_W
 	// Move forward
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		position += direction * deltaTime * speed;
+		position += direction * Timer::Instance()->GetDeltaTime() * speed;
 	}
 	// Move backward
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		position -= direction * deltaTime * speed;
+		position -= direction * Timer::Instance()->GetDeltaTime() * speed;
 	}
 	// Strafe right
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		position += right * deltaTime * speed;
+		position += right * Timer::Instance()->GetDeltaTime() * speed;
 	}
 	// Strafe left
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		position -= right * deltaTime * speed;
+		position -= right * Timer::Instance()->GetDeltaTime() * speed;
 	}
 	
 	// Camera matrix
@@ -80,5 +72,5 @@ void Camera::computeMatricesFromInputs(GLFWwindow* window)
 	);
 
 	// For the next frame, the "last time" will be "now"
-	lastTime = currentTime;
+	Timer::Instance()->LateUpdate();
 }

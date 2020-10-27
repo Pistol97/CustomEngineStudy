@@ -3,6 +3,7 @@
 #include "FileManager.h"
 #include "Renderer.h"
 #include "RenderableObject.h"
+#include "Timer.h"
 #include "Camera.h"
 
 #pragma comment(lib, "OpenGL32.lib")
@@ -28,18 +29,19 @@ int main(void)
 	suzanne->SetTexture("suzanne.DDS");
 
 	Renderer::Instance()->LoadVBO();
+	Timer::Instance()->Init();
+
 
 	do {
-		camera->computeMatricesFromInputs(Renderer::Instance()->GetWindow());
-
 		Renderer::Instance()->Draw();
 		Renderer::Instance()->Update();
-
+		camera->computeMatricesFromInputs(Renderer::Instance()->GetWindow());
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0);
 
 	Renderer::Instance()->Clean();
+	Timer::Instance()->Clean();
 
 	delete cube;
 	delete suzanne;
