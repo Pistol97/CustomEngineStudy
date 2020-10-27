@@ -16,9 +16,9 @@ public:
 	}
 	
 	void Init();
-	void Update();
+	virtual void Update() override;
 	void LateUpdate();
-	void Clean();
+	virtual void Clean() override;
 
 public:
 	inline float GetDeltaTime() { return deltaTime; }
