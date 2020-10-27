@@ -15,7 +15,7 @@
 int main(void)
 {
 	RenderableObject* cube = new RenderableObject(0.0f, 0.0f, 0.0f);
-	Player* player = new Player(0.0f, -3.0f, 9.0f);
+	Player* player = new Player(0.0f, -1.0f, 9.0f);
 
 	Camera* camera = new Camera(0.0f, 1.0f, 15.0f);
 
