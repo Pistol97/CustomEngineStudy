@@ -31,19 +31,23 @@ int main(void)
 	player->SetTexture("suzanne.DDS");
 
 	Renderer::Instance()->LoadVBO();
-	Timer::Instance()->Init();
 
 	player->Rotate(180.0f);
 
-	do {
+	while(glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0)
+	{
 
-		Renderer::Instance()->Update();
+		if (Timer::Instance()->IsUpdateTime())
+		{
+			InputManager::Instance()->InputControl(player);
+			Renderer::Instance()->Update();
+		}
+
 		Renderer::Instance()->Draw();
+
 		camera->MouseView(Renderer::Instance()->GetWindow());
-		InputManager::Instance()->InputControl(player);
-	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0);
+	}
 
 	Renderer::Instance()->Clean();
 	Timer::Instance()->Clean();

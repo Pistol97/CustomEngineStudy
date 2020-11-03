@@ -32,6 +32,7 @@ public:
 	void Init(int width, int height, const char* title_name);
 	void LoadVBO();
 	void Draw();
+
 	virtual void Update() override;
 	virtual void Clean() override;
 

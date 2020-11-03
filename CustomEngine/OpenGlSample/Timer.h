@@ -3,6 +3,9 @@
 
 #include "NonRenderableObject.h"
 
+#include <Windows.h>
+
+
 class Timer : public NonRenderableObject
 {
 public:
@@ -18,6 +21,9 @@ public:
 	void Init();
 	virtual void Update() override;
 	void LateUpdate();
+
+	bool IsUpdateTime();
+
 	virtual void Clean() override;
 
 public:
@@ -32,6 +38,13 @@ private:
 	static double lastTime;
 	double currentTime;
 	float deltaTime;
+
+	double fixedFrame;
+	float fps;
+
+	LARGE_INTEGER hwInfo;
+	LARGE_INTEGER previous_frame;
+	LARGE_INTEGER current_frame;
 };
 
 #endif // !TIMER_H_

@@ -12,11 +12,14 @@
 #include "NonRenderableObject.h"
 #include "Camera.h"
 #include "FileManager.h"
+#include "Timer.h"
 
 Renderer* Renderer::instance = nullptr;
 
 void Renderer::Init(int width, int height, const char* title_name)
 {
+	Timer::Instance()->Init();
+
 	// Initialise GLFW
 	if (!glfwInit())
 	{
@@ -92,9 +95,6 @@ void Renderer::Init(int width, int height, const char* title_name)
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(Renderer::Instance()->GetProgramID());
 	LightID = glGetUniformLocation(Renderer::Instance()->GetProgramID(), "LightPosition_worldspace");
-
-
-
 }
 
 void Renderer::LoadVBO()
