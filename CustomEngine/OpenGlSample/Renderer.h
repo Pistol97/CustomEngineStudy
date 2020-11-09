@@ -12,8 +12,8 @@ struct GLFWwindow;
 
 typedef unsigned int GLuint;
 
+class Object;
 class RenderableObject;
-class NonRenderableObject;
 class Camera;
 
 class Renderer : public IClean, public IUpdater
@@ -30,18 +30,23 @@ public:
 	}
 
 	void Init(int width, int height, const char* title_name);
-	void LoadVBO();
-	void Draw();
 
+	void Draw();
 	virtual void Update() override;
 	virtual void Clean() override;
 
-	inline void RegisterRenderObject(RenderableObject* object) { render_objects.push_back(object); }
-	inline void RegisterNonRenderObject(NonRenderableObject* object) { non_render_objects.push_back(object); }
+	inline void RegisterObject(Object* object) { objects.push_back(object); }
+
 	inline GLFWwindow* GetWindow() { return window; }
-	inline GLuint GetProgramID() { return programID; }
+	inline GLuint GetTextureID() { return TextureID; }
+
+	inline GLuint GetMatrixID() { return MatrixID; }
+	inline GLuint GetViewMatrixID() { return ViewMatrixID; }
+	inline GLuint GetModelMatrixID() { return ModelMatrixID; }
+	inline glm::mat4 GetProjectionMatrix() { return ProjectionMatrix; }
 
 	inline void SetCamera(Camera* cam) { camera = cam; }
+	inline Camera* GetCamera() const { return camera; }
 
 private:
 	Renderer() {}
@@ -54,8 +59,7 @@ private:
 	GLuint VertexArrayID;
 	GLuint programID;
 
-	std::vector<RenderableObject*> render_objects;
-	std::vector<NonRenderableObject*> non_render_objects;
+	std::vector<Object*> objects;
 
 	GLuint TextureID;
 
@@ -71,5 +75,4 @@ private:
 
 	Camera* camera;
 };
-
 #endif // RENDERER_H_

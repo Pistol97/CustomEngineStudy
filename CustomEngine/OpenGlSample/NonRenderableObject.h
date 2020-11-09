@@ -2,13 +2,15 @@
 #define NONRENDERABLEOBJECT_H
 
 #include "Object.h"
-#include "IUpdater.h"
 
-class NonRenderableObject : public Object, public IUpdater
+class NonRenderableObject : public Object
 {
 public:
-	NonRenderableObject();
-	virtual void Update() override;
+	virtual void Init() {}
+	virtual void Update() override {}
+	virtual void End() {}
+
+	virtual void Clean() override {}
 };
 
 #endif // !NONRENDERABLEOBJECT_H

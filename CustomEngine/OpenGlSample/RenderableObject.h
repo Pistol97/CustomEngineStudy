@@ -1,34 +1,41 @@
-#ifndef RENDERABLEOBJECT_H
-#define	RENDERABLEOBJECT_H
+#ifndef RENDERABLEOBJECT_H_
+#define	RENDERABLEOBJECT_H_
+
+#include <map>
+#include <vector>
+
+#include"glm/gtc/matrix_transform.hpp"
 
 #include "Object.h"
 
 class RenderableObject : public Object
 {
 public:
-	//해당 좌표 생성
-	RenderableObject(float x, float y, float z);
+	RenderableObject();
+
+	virtual void Clean() override;
+
+protected:
+	virtual void Init() {}
+	virtual void Update() override {}
+	virtual void Draw() {}
+	virtual void End() {}
+
+	void IndexVBO();
+	void LoadVBO();
 
 	void SetMesh(const char* path);
 	void SetTexture(const char* path);
 	void Rotate(float degree);
 
-	virtual void Clean() override;
+	void Render();
 
-
-public:
-	inline std::vector<glm::vec3>& GetIndexedVertices() { return indexed_vertices; }
-	inline std::vector<glm::vec2>& GetIndexedUVs() { return indexed_uvs; }
-	inline std::vector<glm::vec3>& GetIndexedNormals() { return indexed_normals; }
-	inline std::vector<unsigned int>& GetIndices() { return indices; }
-
-	inline GLuint& GetVertexBuffer() { return vertexbuffer; }
-	inline GLuint& GetUVBuffer() { return uvbuffer; }
-	inline GLuint& GetNormalBuffer() { return normalbuffer; }
-	inline GLuint& GetElementBuffer() { return elementbuffer; }
-
-	inline GLuint& GetTexture() { return Texture; }
-	inline glm::mat4 GetModelMatrix() const { return ModelMatrix; }
+	bool getSimilarVertexIndex_fast
+	(
+		PackedVertex& packed,
+		std::map<PackedVertex, unsigned short>& VertexToOutIndex,
+		unsigned short& result
+	);
 
 protected:
 	std::vector<glm::vec3> vertices;
@@ -48,15 +55,5 @@ protected:
 	GLuint Texture;
 
 	glm::mat4 ModelMatrix;
-
-	void indexVBO();
-
-	bool getSimilarVertexIndex_fast
-	(
-		PackedVertex& packed,
-		std::map<PackedVertex, unsigned short>& VertexToOutIndex,
-		unsigned short& result
-	);
 };
-
-#endif
+#endif // RENDERABLEOBJECT_H_

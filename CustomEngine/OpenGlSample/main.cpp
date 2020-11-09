@@ -2,11 +2,12 @@
 
 #include "FileManager.h"
 #include "Renderer.h"
-#include "RenderableObject.h"
 #include "Timer.h"
 #include "InputManager.h"
 #include "Camera.h"
+
 #include "Player.h"
+#include "Cube.h"
 
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "lib-vc2017/glew32.lib")
@@ -14,46 +15,35 @@
 
 int main(void)
 {
-	RenderableObject* cube = new RenderableObject(0.0f, 0.0f, 0.0f);
-	Player* player = new Player(0.0f, -1.0f, 9.0f);
-
 	Camera* camera = new Camera(0.0f, 1.0f, 15.0f);
+	Player* player = new Player();
+	Cube* cube = new Cube();
 
 	Renderer::Instance()->Init(1024, 768, "Custom Architecture");
 	Renderer::Instance()->SetCamera(camera);
 
-	//obj 불러오기
-	cube->SetMesh("cube.obj");
-	player->SetMesh("suzanne.obj");
-
-	//dds 불러오기
-	cube->SetTexture("cube.DDS");
-	player->SetTexture("suzanne.DDS");
-
-	Renderer::Instance()->LoadVBO();
-
-	player->Rotate(180.0f);
-
-	while(glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
+	while (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		glfwWindowShouldClose(Renderer::Instance()->GetWindow()) == 0)
 	{
+		//최대 300프레임
+		if (Timer::Instance()->IsRenderTime())
+		{
+			Renderer::Instance()->Draw();
+		}
 
+		//최대 30프레임
 		if (Timer::Instance()->IsUpdateTime())
 		{
 			InputManager::Instance()->InputControl(player);
 			Renderer::Instance()->Update();
 		}
 
-		Renderer::Instance()->Draw();
-
-		camera->MouseView(Renderer::Instance()->GetWindow());
+		//camera->MouseView(Renderer::Instance()->GetWindow());
 	}
 
 	Renderer::Instance()->Clean();
-	Timer::Instance()->Clean();
-	InputManager::Instance()->Clean();
 
-	delete cube;
+	//delete cube;
 	delete player;
 	delete camera;
 
