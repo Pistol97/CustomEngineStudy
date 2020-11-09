@@ -5,7 +5,6 @@
 
 #include <Windows.h>
 
-
 class Timer : public NonRenderableObject
 {
 public:
@@ -18,16 +17,20 @@ public:
 		return instance;
 	}
 	
-	void Init();
-	virtual void Update() override;
 	void LateUpdate();
-
-	bool IsUpdateTime();
 
 	virtual void Clean() override;
 
+	bool IsRenderTime();
+	bool IsUpdateTime();
+
 public:
 	inline float GetDeltaTime() { return deltaTime; }
+
+protected:
+	virtual void Init() override;
+	virtual void Update() override;
+	virtual void End() override;
 
 private:
 	Timer() {}
@@ -39,8 +42,10 @@ private:
 	double currentTime;
 	float deltaTime;
 
-	double fixedFrame;
-	float fps;
+	double fixed_frame;
+	double max_frame;
+	float fixed_fps;
+	float max_fps;
 
 	LARGE_INTEGER hwInfo;
 	LARGE_INTEGER previous_frame;
