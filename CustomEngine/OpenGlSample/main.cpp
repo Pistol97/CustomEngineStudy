@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "Camera.h"
 
+#include "RenderableObject.h"
 #include "Player.h"
 #include "Cube.h"
 
@@ -16,8 +17,12 @@
 int main(void)
 {
 	Camera* camera = new Camera(0.0f, 1.0f, 15.0f);
-	Player* player = new Player();
-	Cube* cube = new Cube();
+
+	RenderableObject* cube = new Cube();
+	RenderableObject* player = new Player();
+
+	player->AddObject(cube);
+	Renderer::Instance()->RegisterObject(player);
 
 	Renderer::Instance()->Init(1024, 768, "Custom Architecture");
 	Renderer::Instance()->SetCamera(camera);
@@ -29,12 +34,12 @@ int main(void)
 		if (Timer::Instance()->IsRenderTime())
 		{
 			Renderer::Instance()->Draw();
-		}
+;		}
 
 		//최대 30프레임
 		if (Timer::Instance()->IsUpdateTime())
 		{
-			InputManager::Instance()->InputControl(player);
+			//InputManager::Instance()->InputControl(player);
 			Renderer::Instance()->Update();
 		}
 
@@ -43,7 +48,6 @@ int main(void)
 
 	Renderer::Instance()->Clean();
 
-	//delete cube;
 	delete player;
 	delete camera;
 

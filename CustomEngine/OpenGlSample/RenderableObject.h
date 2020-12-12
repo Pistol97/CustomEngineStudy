@@ -12,14 +12,17 @@ class RenderableObject : public Object
 {
 public:
 	RenderableObject();
+	~RenderableObject();
+
+	void AddObject(Object* obj);
 
 	virtual void Clean() override;
 
 protected:
-	virtual void Init() {}
-	virtual void Update() override {}
-	virtual void Draw() {}
-	virtual void End() {}
+	virtual void Init();
+	virtual void Update() override;
+	virtual void Draw();
+	virtual void End();
 
 	void IndexVBO();
 	void LoadVBO();
@@ -55,5 +58,8 @@ protected:
 	GLuint Texture;
 
 	glm::mat4 ModelMatrix;
+
+private:
+	std::vector<Object*>* table;
 };
 #endif // RENDERABLEOBJECT_H_

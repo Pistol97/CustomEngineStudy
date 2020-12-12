@@ -16,7 +16,7 @@ void Cube::Init()
 
 void Cube::Draw()
 {
-	Render();
+	RenderableObject::Draw();
 }
 
 void Cube::Update()

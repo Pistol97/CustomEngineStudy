@@ -19,6 +19,7 @@ struct PackedVertex
 	};
 };
 
+//Component가 되는 오브젝트
 class Object : public IClean, public IUpdater
 {
 public:

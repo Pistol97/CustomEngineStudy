@@ -13,6 +13,27 @@ RenderableObject::RenderableObject()
 	Texture = NULL;
 
 	ModelMatrix = glm::mat4(1.0f);
+
+	table = new std::vector<Object*>();
+;}
+
+RenderableObject::~RenderableObject()
+{
+	for (std::vector<Object*>::iterator it = table->begin();
+		it != table->end();
+		++it)
+	{
+		delete (*it);
+	}
+
+	table->clear();
+
+	delete table;
+}
+
+void RenderableObject::AddObject(Object* obj)
+{
+	table->push_back(obj);
 }
 
 void RenderableObject::Clean()
@@ -23,6 +44,113 @@ void RenderableObject::Clean()
 	glDeleteBuffers(1, &elementbuffer);
 
 	glDeleteTextures(1, &Texture);
+}
+
+void RenderableObject::Init()
+{
+	for (
+		std::vector<Object*>::const_iterator it = table->begin();
+		it != table->end();
+		++it
+		)
+	{
+		(*it)->Object_Init();
+	}
+}
+
+void RenderableObject::Update()
+{
+	for (
+		std::vector<Object*>::const_iterator it = table->begin();
+		it != table->end();
+		++it
+		)
+	{
+		(*it)->Object_Update();
+	}
+}
+
+void RenderableObject::Draw()
+{	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, Texture);
+	// Set our "myTextureSampler" sampler to use Texture Unit 0
+	glUniform1i(Renderer::Instance()->GetTextureID(), 0);
+
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(
+		0,                  // attribute
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+	glVertexAttribPointer(
+		1,                                // attribute
+		2,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+	);
+
+	// 3rd attribute buffer : normals
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glVertexAttribPointer(
+		2,                                // attribute
+		3,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+	);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+
+	glUniformMatrix4fv(Renderer::Instance()->GetViewMatrixID(), 1, GL_FALSE, &Renderer::Instance()->GetCamera()->GetViewMatrix()[0][0]);
+	glUniformMatrix4fv(Renderer::Instance()->GetModelMatrixID(), 1, GL_FALSE, &ModelMatrix[0][0]);
+	glm::mat4 MVP = Renderer::Instance()->GetProjectionMatrix() * Renderer::Instance()->GetCamera()->GetViewMatrix() * ModelMatrix;
+
+	// Send our transformation to the currently bound shader, 
+	// in the "MVP" uniform
+	glUniformMatrix4fv(Renderer::Instance()->GetMatrixID(), 1, GL_FALSE, &MVP[0][0]);
+
+	// Draw the triangles !
+	glDrawElements(
+		GL_TRIANGLES,
+		indices.size(),
+		GL_UNSIGNED_INT,
+		(void*)0
+	);
+
+	for (
+		std::vector<Object*>::const_iterator it = table->begin();
+		it != table->end();
+		++it
+		)
+	{
+		(*it)->Object_Draw();
+	}
+}
+
+void RenderableObject::End()
+{
+	for (
+		std::vector<Object*>::const_iterator it = table->begin();
+		it != table->end();
+		++it
+		)
+	{
+		(*it)->Object_End();
+	}
 }
 
 void RenderableObject::IndexVBO()

@@ -4,5 +4,4 @@
 
 Object::Object()
 {
-	Renderer::Instance()->RegisterObject(this);
 }

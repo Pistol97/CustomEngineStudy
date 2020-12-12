@@ -14,19 +14,23 @@ void Player::Init()
 	ModelMatrix = move * ModelMatrix;
 
 	LoadVBO();
+
+	RenderableObject::Init();
 }
 
 void Player::Draw()
 {
-	Render();
+	RenderableObject::Draw();
 }
 
 void Player::Update()
 {
+	RenderableObject::Update();
 }
 
 void Player::End()
 {
+	RenderableObject::End();
 }
 
 void Player::Move(glm::vec3 position)

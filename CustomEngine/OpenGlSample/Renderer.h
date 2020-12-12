@@ -47,7 +47,7 @@ public:
 
 	inline void SetCamera(Camera* cam) { camera = cam; }
 	inline Camera* GetCamera() const { return camera; }
-
+	GLuint programID;
 private:
 	Renderer() {}
 	~Renderer() {}
@@ -57,7 +57,7 @@ private:
 	GLFWwindow* window;
 
 	GLuint VertexArrayID;
-	GLuint programID;
+
 
 	std::vector<Object*> objects;
 
