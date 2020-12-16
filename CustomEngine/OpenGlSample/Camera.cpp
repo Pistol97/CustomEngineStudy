@@ -2,7 +2,9 @@
 
 #include "include/GLFW/glfw3.h"
 #include "Timer.h"
+#include "Renderer.h"
 #include "InputManager.h"
+#include "Player.h"
 
 Camera::Camera(float x, float y, float z)
 {
@@ -22,9 +24,8 @@ void Camera::MouseView(GLFWwindow* window)
 	ViewMatrix = glm::lookAt(
 		position,           // Camera is here
 		position + InputManager::Instance()->GetDirection(), // and looks here : at the same position, plus "direction"
-		InputManager::Instance()->GetUp()                  // Head is up (set to 0,-1,0 to look upside-down)
+		InputManager::Instance()->GetUp()                // Head is up (set to 0,-1,0 to look upside-down)
 	);
 
-	// For the next frame, the "last time" will be "now"
 	Timer::Instance()->LateUpdate();
 }

@@ -19,11 +19,9 @@ public:
 		return instance;
 	}
 
-	void InputControl(Player* player);
-
 	virtual void Update() override;
 	virtual void Clean() override;
-	
+
 
 public:
 	inline float GetHorizontalAngle() { return horizontal_angle; }
@@ -32,7 +30,7 @@ public:
 	inline glm::vec3 GetDirection() { return direction; }
 	inline glm::vec3 GetRight() { return right; }
 	inline glm::vec3 GetUp() { return up; }
-	
+
 
 private:
 	InputManager();
@@ -42,7 +40,7 @@ private:
 	double mouse_xpos;
 	double mouse_ypos;
 
-	float mouse_speed = 0.005f;
+	float mouse_speed = 0.001f;
 
 	float horizontal_angle = 3.14f;
 	float vertical_angle = 0.0f;
@@ -51,6 +49,4 @@ private:
 	glm::vec3 right;
 	glm::vec3 up;
 };
-
-
 #endif // !INPUTMANAGER_H_

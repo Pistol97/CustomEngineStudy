@@ -3,13 +3,12 @@
 
 #include "RenderableObject.h"
 
+class Camera;
+
 class Player : public RenderableObject
 {
 public:
-	void Move(glm::vec3 position);
-
-public:
-	inline float GetMoveSpeed() { return move_speed; }
+	inline void SetCamera(Camera* cam) { camera = cam; }
 
 protected:
 	virtual void Init();
@@ -18,7 +17,13 @@ protected:
 	virtual void End();
 
 private:
-	float move_speed = 10.0f;
+	float move_speed = 0.1f;
+
+	glm::mat4 move;
+
+	glm::vec3 position;
+
+	Camera* camera;
 };
 
 #endif // !PLAYER_H_

@@ -13,39 +13,6 @@ InputManager::InputManager()
 {
 }
 
-void InputManager::InputControl(Player* player)
-{
-	glm::vec3 position = glm::vec3(0.0f,0.0f,0.0f);
-
-	// Move forward
-	if (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_W) == GLFW_PRESS) 
-	{
-		position += direction * Timer::Instance()->GetDeltaTime() * player->GetMoveSpeed();
-		player->Move(position);
-	}
-	// Move backward
-	if (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_S) == GLFW_PRESS) 
-	{
-		position -= direction * Timer::Instance()->GetDeltaTime() * player->GetMoveSpeed();
-		player->Move(position);
-	}
-	// Strafe right
-	if (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_D) == GLFW_PRESS) 
-	{
-		position += right * Timer::Instance()->GetDeltaTime() * player->GetMoveSpeed();
-		player->Move(position);
-	}
-	// Strafe left
-	if (glfwGetKey(Renderer::Instance()->GetWindow(), GLFW_KEY_A) == GLFW_PRESS) 
-	{
-		position -= right * Timer::Instance()->GetDeltaTime() * player->GetMoveSpeed();
-		player->Move(position);
-	}
-
-	// For the next frame, the "last time" will be "now"
-	Timer::Instance()->LateUpdate();
-}
-
 void InputManager::Update()
 {
 	// 커서 위치 불러오기
